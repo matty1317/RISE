@@ -17,14 +17,13 @@ RISE SDK Generated Podcast Episode
 
 ### 2. Architecture
 
-The SDK consists of the following components:
+The SDK consists of five main components:
 
-RISE Indicator Implementation: Hosted on a dedicated server, processes price and volume data to produce indicator values.
-Core SDK: Handles API communication and data processing
-InfluxDB Cache: Stores indicator values for improved performance
-Proxy Server: Provides a REST API for client access
-Web Visualization: Simple dashboard for data visualization
-
+  1. RISE Indicator Implementation: Hosted on a dedicated server, processes price and volume data to produce indicator values.
+  2. Core SDK: Handles API communication and data processing
+  3. InfluxDB Cache: Stores indicator values for improved performance
+  4. Proxy Server: Provides a REST API for client access
+  5. Web Visualization: Simple dashboard for data visualization
 
 ### 3. Implementation
 
