@@ -58,7 +58,7 @@ Constructor: Initializes the RISEImplementation instance with the provided confi
 getIndicatorValues: Retrieves the RISE indicator values for the specified symbol, parameters, and time range. It checks the cache first, then the InfluxDB, and finally fetches from the RISE indicator implementation if necessary.
 getFromInflux: Retrieves the cached RISE indicator values from InfluxDB.
 cacheResults: Caches the RISE indicator values in InfluxDB.
-fetchFromAPI: Fetches the RISE indicator values from the data source API.
+fetchFromRISE: Fetches the RISE indicator values from the data source implementation.
 
 Rise Signal Generator 
 
