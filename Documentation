@@ -1,0 +1,286 @@
+# RISE Indicator SDK Documentation
+
+## Table of Contents
+1. [Overview]
+2. [Architecture]
+3. [Implementation]
+4. [Testing]
+5. [SDK Methods]
+6. [Dependencies]
+7. [Usage]
+
+### 1. Overview
+
+The RISE Indicator SDK provides an interface for accessing RISE indicator values, generating trading signals, and evaluating trading strategies. This SDK includes:
+
+A RISE indicator implementation hosted on a dedicated server, which processes price and volume data to produce indicator values
+Core SDK class for handling API communication and data processing
+A RISEConfidenceCalculator class for calculating the confidence level of trading signals
+A RiseSignalGenerator class for generating trading signals based on RISE indicator values
+A RISEStrategy class for evaluating trading strategies using the generated signals
+Data caching via InfluxDB for improved performance
+A proxy server for client access
+
+
+RISE SDK Generated Podcast Episode
+
+
+### 2. Architecture
+
+The SDK consists of the following components:
+
+RISE Indicator Implementation: Hosted on a dedicated server, processes price and volume data to produce indicator values.
+Core SDK: Handles API communication and data processing
+InfluxDB Cache: Stores indicator values for improved performance
+Proxy Server: Provides a REST API for client access
+Web Visualization: Simple dashboard for data visualization
+
+
+### 3. Implementation
+
+The RISE indicator codebase is a Node.js-based implementation that provides a scalable and maintainable solution for generating trading signals.
+
+The codebase consists of four primary components:
+
+RISE Core: This module provides the core functionality for interacting with the data source API, caching, and logging.
+
+Rise Signal Generator: This module is responsible for generating trading signals based on the RISE indicator values and candle data.
+
+RISE Strategy: This module implements a basic trading strategy based on the generated signals.
+
+21 Confident Calculator: The RISEConfidenceCalculator class is responsible for calculating the confidence level of a trading signal based on various technical indicators and market conditions.
+
+Class: RISECore
+
+This class provides the core functionality for interacting with the data source API, caching, and logging.
+
+Constructor: Initializes the RISEImplementation instance with the provided configuration.
+getIndicatorValues: Retrieves the RISE indicator values for the specified symbol, parameters, and time range. It checks the cache first, then the InfluxDB, and finally fetches from the API if necessary.
+getFromInflux: Retrieves the cached RISE indicator values from InfluxDB.
+cacheResults: Caches the RISE indicator values in InfluxDB.
+fetchFromAPI: Fetches the RISE indicator values from the data source API.
+
+Rise Signal Generator 
+
+Class: RiseSignalGenerator
+
+This class generates trading signals based on the RISE indicator values and candle data.
+
+Constructor: Initializes the RiseSignalGenerator instance with the provided RISEImplementation instance and configuration.
+generateSignals: Generates trading signals for the specified symbol, parameters, and time range.
+getCandleData: Retrieves the candle data for the specified symbol and time range.
+analyzeValues: Analyzes the RISE indicator values and candle data to generate trading signals.
+determineSignal: Determines the trading signal based on the RISE indicator value, candle data, and parameters.
+postProcessSignals: Post-processes the generated signals to filter out weak signals, sort by timestamp, and add metadata.
+
+RISE Strategy
+
+Class: RISEStrategy
+
+This class implements a basic trading strategy based on the generated signals.
+Constructor: Initializes the RISEStrategy instance with the provided RiseSignalGenerator instance.
+
+backtest: Backtests the trading strategy using the generated signals.
+
+analyzeStrategy Method: The analyzeStrategy method evaluates the performance of the trading strategy based on the generated signals. It simulates trades, calculates key metrics, and returns the results.
+
+RISEConfidenceCalculator and RISESignalProcessor 
+
+Class: RISEConfidenceCalculator (AKA '21 Confident’) 
+
+The RISEConfidenceCalculator class is responsible for calculating the confidence level of a trading signal based on various technical indicators and market conditions.
+
+Key Features:
+
+Calculates confidence levels based on signal strength, historical patterns, and technical indicators.
+Incorporates weights for different technical indicators, such as Cumulative Volume Delta (CVD), Open Interest, and RSI divergence.
+Adjusts confidence levels based on Hedgeye quadrants and volatility.
+
+Methods:
+
+calculateConfidence(signal, signalHistory, marketConditions, technicalData): Calculates the confidence level of a trading signal.
+adjustForConfluentIndicators(confidence, signal, technicalData): Adjusts the confidence level based on the alignment of technical indicators.
+adjustForMarketConditions(confidence, marketConditions): Adjusts the confidence level based on market conditions.
+
+Class: RISESignalProcessor
+
+The RISESignalProcessor class is responsible for processing raw trading signals with enhanced technical analysis.
+
+Key Features:
+
+Filters and sorts trading signals based on confidence levels and other criteria.
+Enriches trading signals with additional metadata, including confidence levels, market conditions, and technical analysis.
+Categorizes trading signals based on strength, confidence, and market environment.
+
+Methods:
+
+processSignals(rawSignals, signalHistory, marketConditions, technicalData): Processes raw trading signals with enhanced technical analysis.
+enrichSignal(signal, signalHistory, marketConditions, technicalData): Enriches a trading signal with additional metadata.
+filterWeakSignals(signal): Filters out weak trading signals based on confidence levels and other criteria.
+
+Parameters
+
+signals: An array of signal objects containing the signal type, value, and timestamp. Return an object with two properties:
+trades: An array of trade objects containing the entry and exit values, profit, signal type, and timestamps.
+metrics: An object with key performance metrics, including total trades, winning trades, losing trades, profit factor, and win rate.
+
+Metrics Calculation
+
+The analyzeStrategy method calculates the following metrics:
+
+Total Trades: The total number of trades executed.
+Winning Trades: The number of trades with a positive profit.
+Losing Trades: The number of trades with a negative or zero profit.
+Profit Factor: The ratio of total profit to total loss. If there are no losses, the profit factor is set to Infinity.
+Win Rate: The percentage of winning trades out of the total number of trades. If there are no trades, the win rate is set to 0.
+
+
+### 4. Testing
+
+RISE Strategy Implementation Testing
+
+The RISE strategy implementation is designed to evaluate the performance of a trading strategy based on generated signals. This testing documentation outlines the test cases and procedures to ensure the implementation meets the required functionality and performance standards.
+
+Test Objectives
+
+Validate the correctness of trading signal generation
+Evaluate the accuracy of the trading strategy
+Verify the correct calculation of performance metrics (total trades, winning trades, losing trades, profit factor, and win rate)
+Ensure proper error handling and exception management
+Test Scope
+Signal generation
+Strategy evaluation
+Metrics calculation
+Error handling
+
+Test Environment
+
+Node.js version: 14.x or higher
+Required dependencies: axios, influx, lodash, node-cache, winston
+
+Test Cases
+
+1. Signal Generation
+
+Test signal generation with different input parameters (symbol, time range, and configuration)
+
+Verify correct signal properties (signal type, value, and timestamp)
+
+2. Strategy Evaluation
+
+Test strategy evaluation with different input signals and configuration
+Verify correct strategy evaluation results (trades and metrics)
+
+3. Metrics Calculation
+
+Test metrics calculation with different trade scenarios
+Verify correct calculation of performance metrics
+
+4. Error Handling
+
+Test error handling with invalid input parameters, API errors, and caching issues
+Verify proper error handling and exception management
+
+Test Data
+
+Sample trading signals
+Historical market data (for backtesting)
+Test configuration files (for different input parameters)
+
+Test Deliverables
+
+Test report detailing test results and any issues encountered
+Updated implementation addressing any issues or errors discovered during testing
+
+
+### 5. SDK Methods
+
+The RISE SDK provides a set of methods for interacting with the RISE indicator and generating trading signals.
+
+The following methods are available:
+
+1. getIndicatorValues(symbol, params, timeRange)
+
+Retrieves the RISE indicator values for the specified symbol, parameters, and time range. Requires a valid token for access. Checks the cache first, then the InfluxDB, and finally fetches from the indicator implementation if necessary.
+
+Parameters
+
+symbol: The symbol for which to retrieve indicator values (e.g., "BTCUSD").
+params: An object containing the indicator parameters (e.g., { length: 14 }).
+timeRange: The time range for which to retrieve indicator values (e.g., "1d").
+
+1. getFromInflux(symbol, params, timeRange)
+
+Retrieves the cached RISE indicator values from InfluxDB.
+Returns a promise resolving to an array of cached indicator values or null if no cached values are found.
+
+Parameters
+
+symbol: The symbol for which to retrieve cached indicator values (e.g., "BTCUSD").
+params: An object containing the indicator parameters (e.g., { length: 14 }).
+timeRange: The time range for which to retrieve cached indicator values (e.g., "1d").
+
+2. cacheResults(symbol, params, data)
+
+Caches the RISE indicator values in InfluxDB.
+Returns a promise resolving when the caching operation is complete.
+
+Parameters
+
+symbol: The symbol for which to cache indicator values (e.g., "AAPL").
+params: An object containing the indicator parameters (e.g., { length: 14 }).
+data: The indicator values to cache.
+
+3. fetchFromindicator(symbol, params)
+
+Fetches the RISE indicator values from the indicator implementation.
+Returns a promise resolves to an object of indicator values.
+
+Parameters
+
+symbol: The symbol for which to retrieve indicator values (e.g., "BTCUSD").
+params: An object containing the indicator parameters (e.g., { length: 14 }).
+
+4. getCacheKey(symbol, params, timeRange)
+
+Generates a cache key for the specified symbol, parameters, and time range.
+Returns a string representing the cache key.
+
+Parameters
+
+symbol: The symbol for which to generate a cache key (e.g., "BTCUSD").
+params: An object containing the indicator parameters (e.g., { length: 14 }).
+timeRange: The time range for which to generate a cache key (e.g., "1d").
+
+
+### 6. Dependencies
+
+axios: A promise-based HTTP client for making API requests.
+influx: A client library for interacting with InfluxDB.
+winston: A logging library providing a flexible and customizable logging solution.
+lodash: A utility library providing functional programming helpers.
+node-cache: A simple caching library for storing and retrieving data in memory.
+types/node: TypeScript definitions for Node.js
+
+### 7. Usage
+
+To use the RISE indicator codebase:
+
+Obtain a valid token for accessing the proprietary RISE indicator implementation.
+Create an instance of the RISEImplementation class, providing the necessary configuration and token.
+Use the getIndicatorValues method to retrieve RISE indicator values.
+Create instances of the RISEConfidenceCalculator, RiseSignalGenerator, and RISEStrategy classes to calculate signal confidence, generate trading signals, and evaluate trading strategies.
+
+
+To use the RISE strategy implementation, follow these steps:
+
+Create an instance of the RISEImplementation class, providing the necessary configuration.
+Create an instance of the RISESignalGenerator class, passing the RISEImplementation instance.
+Create an instance of the RISEStrategy class, passing the RISESignalGenerator instance.
+Use the generateSignals method of the RISESignalGenerator instance to generate signals.
+Pass the generated signals to the backtest method of the RISEStrategy instance to evaluate the trading strategy.
+
+
+### 8. Real-time Index for Sentiment and Engagement
+
+Real-time Index for Sentiment and Engagement (RISE) uses only price and volume data. Two signal lines oscillate between the calculated Sentiment and Engagement Index. 
