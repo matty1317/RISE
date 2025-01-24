@@ -29,26 +29,21 @@ The SDK consists of five main components:
 
 The RISE indicator codebase is a Node.js-based implementation that provides a scalable and maintainable solution for generating trading signals.
 
-The codebase consists of five primary components:
+The codebase consists of four primary classes:
 
-Indicator Implementation: A proprietary RISE indicator implementation hosted on a dedicated server, which processes price and volume data to produce indicator values.
-
-RISE Core: This module provides the core functionality for interacting with the data source API, caching, and logging.
-
-Rise Signal Generator: This module is responsible for generating trading signals based on the RISE indicator values and candle data.
-
-RISE Strategy: This module implements a basic trading strategy based on the generated signals.
-
-21 Confident Calculator: The RISEConfidenceCalculator class is responsible for calculating the confidence level of a trading signal based on various technical indicators and market conditions.
+  1. RISE Core: This module provides the core functionality for interacting with the data source API, caching, and logging.
+  2. Rise Signal Generator: This module is responsible for generating trading signals based on the RISE indicator values and candle data.
+  3. 21 Confident Calculator: The RISEConfidenceCalculator class is responsible for calculating the confidence level of a trading signal based on various technical indicators and market conditions.
+  4. RISE Strategy: This module implements a basic trading strategy based on the generated signals.
 
 RISE Indicator Retrieval Implementation
 
-1. Client Request: Client requests RISE indicator values for a specific symbol, parameters, and time range.
-2. API Fetch: Core SDK fetches price and volume data with corresponding timestamps from the API.
-3. Server-Side Processing: The fetched price and volume data is sent to your server for processing.
-4. Indicator Calculation: Your server calculates the RISE indicator values using the fetched data.
-5. Data Return: The calculated RISE indicator values are returned to the Core SDK.
-6. Caching: The returned RISE indicator values are cached in InfluxDB.
+  1. Client Request: Client requests RISE indicator values for a specific symbol, parameters, and time range.
+  2. API Fetch: Core SDK fetches price and volume data with corresponding timestamps from the API.
+  3. Server-Side Processing: The fetched price and volume data is sent to your server for processing.
+  4. Indicator Calculation: Your server calculates the RISE indicator values using the fetched data.
+  5. Data Return: The calculated RISE indicator values are returned to the Core SDK.
+  6. Caching: The returned RISE indicator values are cached in InfluxDB.
 
 Class: RISECore
 
@@ -262,23 +257,23 @@ lodash: A utility library providing functional programming helpers.
 node-cache: A simple caching library for storing and retrieving data in memory.
 types/node: TypeScript definitions for Node.js
 
+
 ### 7. Usage
 
 To use the RISE indicator codebase:
 
-Obtain a valid token for accessing the proprietary RISE indicator implementation.
-Create an instance of the RISEImplementation class, providing the necessary configuration and token.
-Use the getIndicatorValues method to retrieve RISE indicator values.
-Create instances of the RISEConfidenceCalculator, RiseSignalGenerator, and RISEStrategy classes to calculate signal confidence, generate trading signals, and evaluate trading strategies.
-
+  1. Obtain a valid token for accessing the proprietary RISE indicator implementation.
+  2. Create an instance of the RISEImplementation class, providing the necessary configuration and token.
+  3. Use the getIndicatorValues method to retrieve RISE indicator values.
+  4. Create instances of the RISEConfidenceCalculator, RiseSignalGenerator, and RISEStrategy classes to calculate signal confidence, generate trading signals, and evaluate trading strategies.
 
 To use the RISE strategy implementation, follow these steps:
 
-Create an instance of the RISEImplementation class, providing the necessary configuration.
-Create an instance of the RISESignalGenerator class, passing the RISEImplementation instance.
-Create an instance of the RISEStrategy class, passing the RISESignalGenerator instance.
-Use the generateSignals method of the RISESignalGenerator instance to generate signals.
-Pass the generated signals to the backtest method of the RISEStrategy instance to evaluate the trading strategy.
+  1. Create an instance of the RISEImplementation class, providing the necessary configuration.
+  2. Create an instance of the RISESignalGenerator class, passing the RISEImplementation instance.
+  3. Create an instance of the RISEStrategy class, passing the RISESignalGenerator instance.
+  4. Use the generateSignals method of the RISESignalGenerator instance to generate signals.
+  5. Pass the generated signals to the backtest method of the RISEStrategy instance to evaluate the trading strategy.
 
 
 ### 8. Real-time Index for Sentiment and Engagement
