@@ -73,10 +73,9 @@ RISE Strategy
 Class: RISEStrategy
 
 This class implements a basic trading strategy based on the generated signals.
+
 Constructor: Initializes the RISEStrategy instance with the provided RiseSignalGenerator instance.
-
 backtest: Backtests the trading strategy using the generated signals.
-
 analyzeStrategy Method: The analyzeStrategy method evaluates the performance of the trading strategy based on the generated signals. It simulates trades, calculates key metrics, and returns the results.
 
 RISEConfidenceCalculator and RISESignalProcessor 
@@ -158,7 +157,6 @@ Test Cases
 1. Signal Generation
 
 Test signal generation with different input parameters (symbol, time range, and configuration)
-
 Verify correct signal properties (signal type, value, and timestamp)
 
 2. Strategy Evaluation
