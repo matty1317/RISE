@@ -11,19 +11,9 @@
 
 ### 1. Overview
 
-The RISE Indicator SDK provides an interface for accessing RISE indicator values, generating trading signals, and evaluating trading strategies. This SDK includes:
-
-A RISE indicator implementation hosted on a dedicated server, which processes price and volume data to produce indicator values
-Core SDK class for handling API communication and data processing
-A RISEConfidenceCalculator class for calculating the confidence level of trading signals
-A RiseSignalGenerator class for generating trading signals based on RISE indicator values
-A RISEStrategy class for evaluating trading strategies using the generated signals
-Data caching via InfluxDB for improved performance
-A proxy server for client access
-
+The RISE Indicator SDK provides an interface for accessing RISE indicator values, generating trading signals, and evaluating trading strategies. 
 
 RISE SDK Generated Podcast Episode
-
 
 ### 2. Architecture
 
